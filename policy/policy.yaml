@@ -1,0 +1,90 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  annotations:
+    policy.open-cluster-management.io/categories: CM Configuration Management
+    policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+    policy.open-cluster-management.io/standards: NIST SP 800-53
+  labels:
+    env: prod
+  name: policy-app
+  namespace: policies
+spec:
+  disabled: false
+  policy-templates:
+  - objectDefinition:
+      apiVersion: policy.open-cluster-management.io/v1
+      kind: ConfigurationPolicy
+      metadata:
+        name: policy-app
+      spec:
+        object-templates:
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              labels:
+                app: gitops-demo
+              name: gitops-demo
+              namespace: gitops-demo
+            spec:
+              replicas: 1
+              selector:
+                matchLabels:
+                  app: gitops-demo
+              template:
+                metadata:
+                  labels:
+                    app: gitops-demo
+                spec:
+                  containers:
+                  - image: quay.io/centos7/httpd-24-centos7:2.4
+                    name: gitops-demo
+                    ports:
+                    - containerPort: 8080
+              triggers:
+              - type: ConfigChange
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: v1
+            kind: Namespace
+            metadata:
+              name: gitops-demo
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: route.openshift.io/v1
+            kind: Route
+            metadata:
+              labels:
+                app: gitops-demo
+              name: gitops-demo
+              namespace: gitops-demo
+            spec:
+              port:
+                targetPort: http
+              tls:
+                insecureEdgeTerminationPolicy: Redirect
+                termination: edge
+              to:
+                kind: Service
+                name: gitops-demo
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: v1
+            kind: Service
+            metadata:
+              labels:
+                app: gitops-demo
+              name: gitops-demo
+              namespace: gitops-demo
+            spec:
+              ports:
+              - name: http
+                port: 80
+                protocol: TCP
+                targetPort: 8080
+              selector:
+                app: gitops-demo
+        remediationAction: inform
+        severity: medium
