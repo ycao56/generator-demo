@@ -8,8 +8,8 @@ policyDefaults:
   namespace: policies
   placement:
     name: demo-placement-rule
-    clusterSelectors:
-      name: local-cluster
+    # clusterSelectors:
+      # name: local-cluster
   remediationAction: inform
   severity: medium
   policySets:
@@ -30,6 +30,7 @@ policies:
                   containers:
                     - name: gitops-demo
                       image: quay.io/centos7/httpd-24-centos7:2.4
+    generatePlacementWhenInSet: true
   - name: policy-gatekeeper-require-labels
     consolidateManifests: false
     manifests:
