@@ -1,13 +1,7 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: policies
----
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
   name: subscription-admin
-  namespace: policies
 spec:
   remediationAction: enforce
   disabled: false
@@ -36,7 +30,6 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
   name: binding-subscription-admin
-  namespace: policies
 placementRef:
   name: placement-subscription-admin
   kind: PlacementRule
@@ -50,7 +43,6 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
   name: placement-subscription-admin
-  namespace: policies
 spec:
   clusterConditions:
     - status: 'True'
