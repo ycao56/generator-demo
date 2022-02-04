@@ -34,6 +34,10 @@ policies:
     consolidateManifests: false
     manifests:
       - path: policy2_gatekeeper/gatekeeper.yaml
+    policySets:
+      - policyset-gatekeeper
   - name: policy-kyverno-require-labels
     manifests:
       - path: policy3_kyverno/kyverno.yaml
+    policySets:
+      - policyset-kyverno
