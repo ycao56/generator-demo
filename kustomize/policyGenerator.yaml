@@ -5,7 +5,7 @@ metadata:
 placementBindingDefaults:
   name: demo-placement-binding
 policyDefaults:
-  namespace: policies
+  namespace: policy-generator-demo
   placement:
     name: demo-placement-rule
     clusterSelectors:
