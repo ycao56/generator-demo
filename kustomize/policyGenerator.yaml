@@ -13,7 +13,7 @@ policyDefaults:
   remediationAction: inform
   severity: medium
   policySets:
-    - default
+    - policyset-app
 policies:
   - name: policy-app
     manifests:
