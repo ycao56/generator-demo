@@ -1,0 +1,11 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicySet
+metadata:
+  labels:
+    env: prod
+  name: policyset-kyverno
+  namespace: policies
+spec:
+  description: ""
+  policies:
+  - policy-kyverno-require-labels
