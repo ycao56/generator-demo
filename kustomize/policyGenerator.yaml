@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: PolicyGenerator
 metadata:
-  name: demo-policy-generator
+  name: policy-generator-demo
 placementBindingDefaults:
   name: demo-placement-binding
 policyDefaults:
